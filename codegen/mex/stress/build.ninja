@@ -1,0 +1,78 @@
+# CompilerName=mingw64
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/win64
+matlabdir = C:/Polyspace/R2020a
+startdir = D:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress
+
+# Toolchain information
+cc = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\gcc
+cxx = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\g++
+linker = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\gcc
+linkerxx = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\g++
+
+cflags =  -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\stress" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\stress\interface" -I "C:\Polyspace\R2020a\extern\include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=stress_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+cxxflags =  -c -fexceptions -fno-omit-frame-pointer -std=c++11 -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c++11 -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\stress" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\stress\interface" -I "C:\Polyspace\R2020a\extern\include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=stress_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+ldflags =  -m64 -Wl,--no-undefined -shared -static -L"C:\Polyspace\R2020a\extern\lib\win64\mingw64" -llibmx -llibmex -llibmat -lm -llibmwlapack -llibmwblas -o "stress_mex.mexw64" -L"$matlabdir\extern\lib\win64\mingw64" -llibmwlapack -llibmwblas -llibemlrt -llibcovrt -llibut -llibmwmathutil  -Wl,--version-script,stress_mex.map
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker @$out.rsp $ldflags
+    rspfile = $out.rsp
+    rspfile_content = $in
+
+rule linkxx
+    command = $linkerxx $in $ldflags
+
+# Build
+build $builddir/rt_nonfinite.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/rt_nonfinite.c
+build $builddir/stress_data.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/stress_data.c
+build $builddir/stress_initialize.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/stress_initialize.c
+build $builddir/stress_terminate.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/stress_terminate.c
+build $builddir/stress.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/stress.c
+build $builddir/power.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/power.c
+build $builddir/abs.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/abs.c
+build $builddir/integrale_num_inf.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/integrale_num_inf.c
+build $builddir/vadapt.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/vadapt.c
+build $builddir/split.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/split.c
+build $builddir/diff.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/diff.c
+build $builddir/eml_int_forloop_overflow_check.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/eml_int_forloop_overflow_check.c
+build $builddir/find.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/find.c
+build $builddir/nullAssignment.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/nullAssignment.c
+build $builddir/sum.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/sum.c
+build $builddir/reshapeSizeChecks.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/reshapeSizeChecks.c
+build $builddir/scalexpAlloc.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/scalexpAlloc.c
+build $builddir/Im_Xi.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/Im_Xi.c
+build $builddir/P_R.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/P_R.c
+build $builddir/Re_Xi.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/Re_Xi.c
+build $builddir/Q_R.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/Q_R.c
+build $builddir/mldivide.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/mldivide.c
+build $builddir/xgetrfs.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/xgetrfs.c
+build $builddir/warning.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/warning.c
+build $builddir/mtimes.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/mtimes.c
+build $builddir/Re_Zeta_S.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/Re_Zeta_S.c
+build $builddir/Im_Zeta_S.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/Im_Zeta_S.c
+build $builddir/checkSpacing.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/checkSpacing.c
+build $builddir/toLogicalCheck.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/toLogicalCheck.c
+build $builddir/ifWhileCond.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/ifWhileCond.c
+build $builddir/sigma_homo.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/sigma_homo.c
+build $builddir/f0_sigma.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/f0_sigma.c
+build $builddir/_coder_stress_api.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/interface/_coder_stress_api.c
+build $builddir/_coder_stress_mex.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/interface/_coder_stress_mex.c
+build $builddir/stress_emxutil.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/stress_emxutil.c
+build $builddir/_coder_stress_info.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/stress/interface/_coder_stress_info.c
+build $builddir/c_mexapi_version.o : cc C$:/Polyspace/R2020a/extern/version/c_mexapi_version.c
+
+# Link
+build $root\stress_mex.mexw64 : link $builddir\rt_nonfinite.o $builddir\stress_data.o $builddir\stress_initialize.o $builddir\stress_terminate.o $builddir\stress.o $builddir\power.o $builddir\abs.o $builddir\integrale_num_inf.o $builddir\vadapt.o $builddir\split.o $builddir\diff.o $builddir\eml_int_forloop_overflow_check.o $builddir\find.o $builddir\nullAssignment.o $builddir\sum.o $builddir\reshapeSizeChecks.o $builddir\scalexpAlloc.o $builddir\Im_Xi.o $builddir\P_R.o $builddir\Re_Xi.o $builddir\Q_R.o $builddir\mldivide.o $builddir\xgetrfs.o $builddir\warning.o $builddir\mtimes.o $builddir\Re_Zeta_S.o $builddir\Im_Zeta_S.o $builddir\checkSpacing.o $builddir\toLogicalCheck.o $builddir\ifWhileCond.o $builddir\sigma_homo.o $builddir\f0_sigma.o $builddir\_coder_stress_api.o $builddir\_coder_stress_mex.o $builddir\stress_emxutil.o $builddir\_coder_stress_info.o $builddir\c_mexapi_version.o 
