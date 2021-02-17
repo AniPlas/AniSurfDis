@@ -1,0 +1,62 @@
+# CompilerName=mingw64
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root/build/win64
+matlabdir = C:/Polyspace/R2020a
+startdir = D:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress
+
+# Toolchain information
+cc = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\gcc
+cxx = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\g++
+linker = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\gcc
+linkerxx = C:\ProgramData\MATLAB\SupportPackages\R2020a\3P.instrset\mingw_w64.instrset\bin\g++
+
+cflags =  -c -fexceptions -fno-omit-frame-pointer -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c99 -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\coef_rho" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\coef_rho\interface" -I "C:\Polyspace\R2020a\extern\include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=coef_rho_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+cxxflags =  -c -fexceptions -fno-omit-frame-pointer -std=c++11 -m64 -DMATLAB_MEX_FILE  -DMATLAB_MEX_FILE -O2 -fwrapv -DNDEBUG -std=c++11 -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\coef_rho" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress" -I "D:\synology\SynologyDrive\CHEN_Xiaolei\thesis\Paper\IJP_Template\MatlabCode\ImageStress\codegen\mex\coef_rho\interface" -I "C:\Polyspace\R2020a\extern\include" -I "." -DHAVE_LAPACK_CONFIG_H -DLAPACK_COMPLEX_STRUCTURE -DMW_HAVE_LAPACK_DECLS -DMODEL=coef_rho_mex -D__USE_MINGW_ANSI_STDIO=1  
+
+ldflags =  -m64 -Wl,--no-undefined -shared -static -L"C:\Polyspace\R2020a\extern\lib\win64\mingw64" -llibmx -llibmex -llibmat -lm -llibmwlapack -llibmwblas -o "coef_rho_mex.mexw64" -L"$matlabdir\extern\lib\win64\mingw64" -llibmwlapack -llibmwblas -llibemlrt -llibcovrt -llibut -llibmwmathutil  -Wl,--version-script,coef_rho_mex.map
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in -o $out
+
+rule cxx
+    command = $cxx $cxxflags $in -o $out
+
+rule link
+    command = $linker @$out.rsp $ldflags
+    rspfile = $out.rsp
+    rspfile_content = $in
+
+rule linkxx
+    command = $linkerxx $in $ldflags
+
+# Build
+build $builddir/rt_nonfinite.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/rt_nonfinite.c
+build $builddir/coef_rho_data.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/coef_rho_data.c
+build $builddir/coef_rho_initialize.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/coef_rho_initialize.c
+build $builddir/coef_rho_terminate.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/coef_rho_terminate.c
+build $builddir/coef_rho.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/coef_rho.c
+build $builddir/Re_Xi.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/Re_Xi.c
+build $builddir/mrdivide_helper.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/mrdivide_helper.c
+build $builddir/xgetrf.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/xgetrf.c
+build $builddir/eml_int_forloop_overflow_check.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/eml_int_forloop_overflow_check.c
+build $builddir/xtrsm.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/xtrsm.c
+build $builddir/warning.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/warning.c
+build $builddir/mtimes.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/mtimes.c
+build $builddir/diag.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/diag.c
+build $builddir/Im_Xi.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/Im_Xi.c
+build $builddir/P_R.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/P_R.c
+build $builddir/Q_R.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/Q_R.c
+build $builddir/_coder_coef_rho_api.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/interface/_coder_coef_rho_api.c
+build $builddir/_coder_coef_rho_mex.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/interface/_coder_coef_rho_mex.c
+build $builddir/coef_rho_emxutil.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/coef_rho_emxutil.c
+build $builddir/_coder_coef_rho_info.o : cc D$:/synology/SynologyDrive/CHEN_Xiaolei/thesis/Paper/IJP_Template/MatlabCode/ImageStress/codegen/mex/coef_rho/interface/_coder_coef_rho_info.c
+build $builddir/c_mexapi_version.o : cc C$:/Polyspace/R2020a/extern/version/c_mexapi_version.c
+
+# Link
+build $root\coef_rho_mex.mexw64 : link $builddir\rt_nonfinite.o $builddir\coef_rho_data.o $builddir\coef_rho_initialize.o $builddir\coef_rho_terminate.o $builddir\coef_rho.o $builddir\Re_Xi.o $builddir\mrdivide_helper.o $builddir\xgetrf.o $builddir\eml_int_forloop_overflow_check.o $builddir\xtrsm.o $builddir\warning.o $builddir\mtimes.o $builddir\diag.o $builddir\Im_Xi.o $builddir\P_R.o $builddir\Q_R.o $builddir\_coder_coef_rho_api.o $builddir\_coder_coef_rho_mex.o $builddir\coef_rho_emxutil.o $builddir\_coder_coef_rho_info.o $builddir\c_mexapi_version.o 

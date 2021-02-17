@@ -1,0 +1,15 @@
+MEX {
+	global:
+		mexFunction;
+		mexfilerequiredapiversion;
+		emlrtMexFcnProperties;
+		coef_rho_initialize;
+		coef_rho_terminate;
+		coef_rho_atexit;
+		coef_rho;
+		emxEnsureCapacity_real_T;
+		emxInit_real_T;
+		emxFree_real_T;
+	local:
+		*;
+};
