@@ -1,0 +1,21 @@
+MEX {
+	global:
+		mexFunction;
+		mexfilerequiredapiversion;
+		emlrtMexFcnProperties;
+		Rho_density;
+		emxEnsureCapacity_int32_T;
+		emxEnsureCapacity_ptrdiff_t;
+		emxEnsureCapacity_real_T;
+		emxFree_int32_T;
+		emxFree_ptrdiff_t;
+		emxFree_real_T;
+		emxInit_int32_T;
+		emxInit_ptrdiff_t;
+		emxInit_real_T;
+		Rho_density_initialize;
+		Rho_density_terminate;
+		Rho_density_atexit;
+	local:
+		*;
+};
